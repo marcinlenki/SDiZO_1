@@ -1,5 +1,6 @@
 #include <iostream>
 #include<cstdlib>
+#include<chrono>
 #include<ctime>
 #include "Tablica.h"
 #include "Lista.h"
@@ -9,8 +10,8 @@ using namespace std;
 
 class TimeTest {
 public:
-    const char* FILE_PATH = "/Users/marcinlenkiewicz/Desktop/Studia/SDiZO/Projekt/dane.txt";
-    const char* RESULTS_FILE_PATH = "/Users/marcinlenkiewicz/Desktop/Studia/SDiZO/Projekt/wyniki.txt";
+    const char* FILE_NAME = "../dane.txt";
+    const char* RESULTS_FILE_NAME = "../wyniki.txt";
     ofstream structFile, results;
     int NUMBER_OF_REPETITIONS;
     int NUMBER_OF_REPETITIONS_PER_OPERATION;
@@ -18,8 +19,30 @@ public:
     long resultsMatrix[3][7] = {{0}};
     long finalResults[5][3][7] = {{{0}}};
 
+    double PCFreq = 0.0;
+    __int64 CounterStart = 0;
+
+    void StartCounter() {
+        LARGE_INTEGER li;
+        if(!QueryPerformanceFrequency(&li))
+            cout<<"QueryPerformanceFrequency failed!"<<endl;
+
+        PCFreq = double(li.QuadPart)/1000000000.0;
+
+        QueryPerformanceCounter(&li);
+        CounterStart = li.QuadPart;
+    }
+
+    double GetCounter() {
+        LARGE_INTEGER li;
+        QueryPerformanceCounter(&li);
+        return double (li.QuadPart - CounterStart)/PCFreq;
+    }
+
+
     void generateInputData(int size, int maxRand) {
-        structFile.open(FILE_PATH);
+        structFile.open(FILE_NAME);
+
         int randNum;
 
         structFile<<size<<endl;
@@ -34,7 +57,7 @@ public:
     }
 
     void generateResultsFile() {
-        results.open(RESULTS_FILE_PATH);
+        results.open(RESULTS_FILE_NAME);
         bool flag = false;
 
         for(int i = 0; i <NUMBER_OF_REPETITIONS; i++) {
@@ -128,9 +151,9 @@ public:
             
             for(int j = 0; j<NUMBER_OF_REPETITIONS_PER_OPERATION; j++) {
 
-                tablica->fillFromFile(FILE_PATH);
-                lista->fillFromFile(FILE_PATH);
-                kopiec->fillFromFile(FILE_PATH);
+                tablica->fillFromFile(FILE_NAME);
+                lista->fillFromFile(FILE_NAME);
+                kopiec->fillFromFile(FILE_NAME);
 
 
                 //--------------------------------------------------------------------------------------------------
@@ -274,8 +297,8 @@ public:
                 for(int j = 0; j<7; j++) {
                     resultsMatrix[k][j] /= NUMBER_OF_REPETITIONS_PER_OPERATION;
                     if(resultsMatrix[k][j] != 0) {
-//                        cout<<resultsMatrix[k][j]<<" ";
-                        finalResults[i][k][j] = resultsMatrix[k][j];
+                        cout<<resultsMatrix[k][j]<<" ";
+//                        finalResults[i][k][j] = resultsMatrix[k][j];
                     }
                     resultsMatrix[k][j] = 0;
                 }

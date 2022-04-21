@@ -7,7 +7,7 @@
 
 using namespace std;
 const char* ERROR_MESSAGE = "Nie udało się wykonać operacji.\n";
-const char* FILE_PATH = "/Users/marcinlenkiewicz/Desktop/Studia/SDiZO/Projekt/dane.txt";
+const char* FILE_NAME = "../dane.txt";
 
 Tablica *tablica;
 Lista *lista;
@@ -52,7 +52,8 @@ int main() {
     int menuChoice, choice, value = 0, index = 0;
     bool changeStruct, quit = false;
 
-    if(false) {
+    goto b;
+
         cout<<"1. Test ręczny"<<endl;
         cout<<"2. Test automatyczny"<<endl;
         cout<<"Wybór: ";
@@ -71,11 +72,11 @@ int main() {
                             cin >> choice;
                             switch (choice) {
                                 case 1:
-                                    tablica->fillFromFile(FILE_PATH);
+                                    tablica->fillFromFile(FILE_NAME);
                                     break;
                                 case 2:
                                     tablica->show();
-                                    cout << "Naciśnij dowolony znak, aby przejść dalej.";
+                                    cout << "Naciśnij ENTER, aby przejść dalej.";
                                     cin.get();
                                     cin.get();
                                     cout << endl;
@@ -105,7 +106,7 @@ int main() {
                                 case 7:
                                     cout << "Podaj wartość do wpisania do struktury: ";
                                     cin >> value;
-                                    cout << "Podaj indeks na którum chcesz wykonać operację: ";
+                                    cout << "Podaj indeks na który chcesz wykonać operację: ";
                                     cin >> index;
                                     if (!tablica->addIndex(index, value)) {
                                         cout << ERROR_MESSAGE << endl;
@@ -113,7 +114,7 @@ int main() {
                                         cout << "Dodawanie zakończone sukcesem" << endl;
                                     break;
                                 case 8:
-                                    cout << "Podaj indeks na którum chcesz wykonać operację: ";
+                                    cout << "Podaj indeks na który chcesz wykonać operację: ";
                                     cin >> index;
                                     if (!tablica->removeIndex(index)) {
                                         cout << ERROR_MESSAGE << endl;
@@ -148,11 +149,11 @@ int main() {
                             cin >> choice;
                             switch (choice) {
                                 case 1:
-                                    lista->fillFromFile(FILE_PATH);
+                                    lista->fillFromFile(FILE_NAME);
                                     break;
                                 case 2:
                                     lista->show();
-                                    cout << "Naciśnij dowolony znak, aby przejść dalej.";
+                                    cout << "Naciśnij dowolny znak, aby przejść dalej.";
                                     cin.get();
                                     cin.get();
                                     cout << endl;
@@ -182,7 +183,7 @@ int main() {
                                 case 7:
                                     cout << "Podaj wartość do wpisania do struktury: ";
                                     cin >> value;
-                                    cout << "Podaj indeks na którum chcesz wykonać operację: ";
+                                    cout << "Podaj indeks na który chcesz wykonać operację: ";
                                     cin >> index;
                                     if (!lista->addIndex(index, value)) {
                                         cout << ERROR_MESSAGE << endl;
@@ -190,7 +191,7 @@ int main() {
                                         cout << "Dodawanie zakończone sukcesem" << endl;
                                     break;
                                 case 8:
-                                    cout << "Podaj indeks na którum chcesz wykonać operację: ";
+                                    cout << "Podaj indeks na który chcesz wykonać operację: ";
                                     cin >> index;
                                     if (!lista->removeIndex(index)) {
                                         cout << ERROR_MESSAGE << endl;
@@ -225,11 +226,11 @@ int main() {
                             cin >> choice;
                             switch (choice) {
                                 case 1:
-                                    kopiec->fillFromFile(FILE_PATH);
+                                    kopiec->fillFromFile(FILE_NAME);
                                     break;
                                 case 2:
                                     kopiec->show();
-                                    cout << "Naciśnij dowolony znak, aby przejść dalej.";
+                                    cout << "Naciśnij ENTER, aby przejść dalej.";
                                     cin.get();
 
                                     cout << endl;
@@ -280,68 +281,18 @@ int main() {
             timeTest.run();
         } else
             cout << "Błędny wybór!" << endl;
-    }
 
-    lista = new Lista;
-    TimeTest timeTest;
+        b:
+        lista = new Lista;
+        TimeTest timeTest;
+        lista->fillFromFile(FILE_NAME);
+//        timeTest.generateInputData(10000, 1000);
 
-    timeTest.generateInputData(10000, 1000);
-    lista->fillFromFile(FILE_PATH);
+        timeTest.StartCounter();
+        lista->addEnd(100);
+        cout<<timeTest.GetCounter()<<endl;
 
-    lista->show();
-
-//    lista->addBeginning(-300);
-//    lista->addBeginning(100);
-//    lista->addBeginning(1300);
-//    lista->addBeginning(300);
-//    lista->addBeginning(-242);
-
-    auto begin = std::chrono::high_resolution_clock::now();
-    lista->addBeginning(1000);
-    auto end = std::chrono::high_resolution_clock::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-
-    cout<<"Time measured for 10000 elements: "<<elapsed.count()<<endl;
-//
-//    timeTest.generateInputData(20000, 1000);
-//    lista->fillFromFile(FILE_PATH);
-//
-//    begin = std::chrono::high_resolution_clock::now();
-//    lista->removeBeginning();
-//    end = std::chrono::high_resolution_clock::now();
-//    elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-//
-//    cout<<"Time measured for 20000 elements: "<<elapsed.count()<<endl;
-//
-//    timeTest.generateInputData(30000, 1000);
-//    lista->fillFromFile(FILE_PATH);
-//
-//    begin = std::chrono::high_resolution_clock::now();
-//    lista->removeBeginning();
-//    end = std::chrono::high_resolution_clock::now();
-//    elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-//
-//    cout<<"Time measured for 30000 elements: "<<elapsed.count()<<endl;
-//
-//    timeTest.generateInputData(40000, 1000);
-//    lista->fillFromFile(FILE_PATH);
-//
-//    begin = std::chrono::high_resolution_clock::now();
-//    lista->removeBeginning();
-//    end = std::chrono::high_resolution_clock::now();
-//    elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-//
-//    cout<<"Time measured for 40000 elements: "<<elapsed.count()<<endl;
-//
-//    timeTest.generateInputData(50000, 1000);
-//    lista->fillFromFile(FILE_PATH);
-//
-//    begin = std::chrono::high_resolution_clock::now();
-//    lista->removeBeginning();
-//    end = std::chrono::high_resolution_clock::now();
-//    elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-//
-//    cout<<"Time measured for 50000 elements: "<<elapsed.count()<<endl;
+        lista->show();
 
     return 0;
 }

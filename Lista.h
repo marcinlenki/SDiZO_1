@@ -1,6 +1,6 @@
 #ifndef PROJEKT_LISTA_H
 #define PROJEKT_LISTA_H
-
+#include <windows.h>
 
 class Lista {
 public:

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cmath>
 #include "Kopiec.h"
 
 using namespace std;
@@ -57,12 +58,22 @@ void Kopiec::show() {
         cout<<"Kopiec jest pusty."<<endl;
         return;
     }
-    
-    cout<<"[";
+
+    int base = 2, index = 0, count = 0;
+    int result = (int)pow(base, index);
+
     for(int i = 0; i<heapSize; i++) {
         cout<<arr[i]<<" ";
+        count++;
+
+        if (count == result)   {
+            cout<<endl;
+            index++;
+            count = 0;
+            result = (int)pow(base, index);
+        }
     }
-    cout<<"]"<<endl;
+    cout<<endl;
 }
 
 int *Kopiec::search(int value) {
