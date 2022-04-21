@@ -16,9 +16,12 @@ public:
     int NUMBER_OF_REPETITIONS;
     int NUMBER_OF_REPETITIONS_PER_OPERATION;
     int *DATA_SET_SIZES;
-    long resultsMatrix[3][7] = {{0}};
-    long finalResults[5][3][7] = {{{0}}};
-
+    double resultsMatrix[3][7] = {{0}};
+    double finalResults[5][3][7] = {{{0}}};
+    
+    
+    //                            ZEGAR 2
+    //___________________________________________________________________
     double PCFreq = 0.0;
     __int64 CounterStart = 0;
 
@@ -38,8 +41,9 @@ public:
         QueryPerformanceCounter(&li);
         return double (li.QuadPart - CounterStart)/PCFreq;
     }
+    //___________________________________________________________________
 
-
+    
     void generateInputData(int size, int maxRand) {
         structFile.open(FILE_NAME);
 
@@ -48,7 +52,7 @@ public:
         structFile<<size<<endl;
 
         for(int i = 0; i<size-1; i++) {
-            randNum = (rand() % (2 * maxRand + 1)) - maxRand;
+            randNum = getRandomNumber(maxRand);
             structFile<<randNum<<endl;
         }
         structFile << randNum;
@@ -133,24 +137,165 @@ public:
     }
 
     int getRandomNumber(int maxRand) {
-        return (rand() % 2 * maxRand) + 1 - maxRand;
+        return (rand() % (2 * maxRand + 1)) - maxRand;
     }
 
     void getInputDataAndTest() {
-        int maxRand = 100, finalResultsIndex = 0;
+        int maxRand = 1000, finalResultsIndex = 0;
         Tablica *tablica = new Tablica;
         Lista *lista = new Lista;
         Kopiec *kopiec = new Kopiec;
 
         for(int i = 0; i < NUMBER_OF_REPETITIONS; i++) {
-            generateInputData(DATA_SET_SIZES[i], maxRand);
+//            generateInputData(DATA_SET_SIZES[i], maxRand);
 
             int testNumber = getRandomNumber(maxRand);
             int testIndex = DATA_SET_SIZES[i] / 2;
 
             
             for(int j = 0; j<NUMBER_OF_REPETITIONS_PER_OPERATION; j++) {
-
+//
+//                tablica->fillFromFile(FILE_NAME);
+//                lista->fillFromFile(FILE_NAME);
+//                kopiec->fillFromFile(FILE_NAME);
+//
+//
+//                //--------------------------------------------------------------------------------------------------
+//                //--------------------------------------------------------------------------------------------------
+//                //--------------------------------------------------------------------------------------------------
+//                                                        //TABLICA
+//                //DODAWANIE NA POCZĄTKU
+//                auto begin = std::chrono::high_resolution_clock::now();
+//                tablica->addBeginning(testNumber);
+//                auto end = std::chrono::high_resolution_clock::now();
+//                auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[0][0] += (long)elapsed.count();
+//
+//                //USUWANIE NA POCZĄTKU
+//                begin = std::chrono::high_resolution_clock::now();
+//                tablica->removeBeginning();
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[0][1] += (long)elapsed.count();
+//
+//                //DODAWANIE NA KOŃCU
+//                begin = std::chrono::high_resolution_clock::now();
+//                tablica->addEnd(testNumber);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[0][2] += (long)elapsed.count();
+//
+//                //USUWANIE NA KOŃCU
+//                begin = std::chrono::high_resolution_clock::now();
+//                tablica->removeEnd();
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[0][3] += (long)elapsed.count();
+//
+//                //DODAWANIE NA DOWOLNYM MIEJSCU (środek struktury)
+//                begin = std::chrono::high_resolution_clock::now();
+//                tablica->addIndex(testIndex, testNumber);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[0][4] += (long)elapsed.count();
+//
+//                //USUWANIE NA DOWOLNYM MIEJSCU (środek struktury)
+//                begin = std::chrono::high_resolution_clock::now();
+//                tablica->removeIndex(testIndex);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[0][5] += (long)elapsed.count();
+//
+//                //WYSZUKIWANIE
+//                begin = std::chrono::high_resolution_clock::now();
+//                tablica->search(testNumber);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[0][6] += (long)elapsed.count();
+//
+//
+//                //--------------------------------------------------------------------------------------------------
+//                //--------------------------------------------------------------------------------------------------
+//                //--------------------------------------------------------------------------------------------------
+//                //                                         LISTA
+//                //DODAWANIE NA POCZĄTKU
+//                begin = std::chrono::high_resolution_clock::now();
+//                lista->addBeginning(testNumber);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[1][0] += (long)elapsed.count();
+//
+//                //USUWANIE NA POCZĄTKU
+//                begin = std::chrono::high_resolution_clock::now();
+//                lista->removeBeginning();
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[1][1] += (long)elapsed.count();
+//
+//                //DODAWANIE NA KOŃCU
+//                begin = std::chrono::high_resolution_clock::now();
+//                lista->addEnd(testNumber);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[1][2] += (long)elapsed.count();
+//
+//                //USUWANIE NA KOŃCU
+//                begin = std::chrono::high_resolution_clock::now();
+//                lista->removeEnd();
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[1][3] += (long)elapsed.count();
+//
+//                //DODAWANIE NA DOWOLNYM MIEJSCU (środek struktury)
+//                begin = std::chrono::high_resolution_clock::now();
+//                lista->addIndex(testIndex, testNumber);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[1][4] += (long)elapsed.count();
+//
+//                //USUWANIE NA DOWOLNYM MIEJSCU (środek struktury)
+//                begin = std::chrono::high_resolution_clock::now();
+//                lista->removeIndex(testIndex);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[1][5] += (long)elapsed.count();
+//
+//                //WYSZUKIWANIE
+//                begin = std::chrono::high_resolution_clock::now();
+//                lista->search(testNumber);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[1][6] += (long)elapsed.count();
+//
+//
+//                //--------------------------------------------------------------------------------------------------
+//                //--------------------------------------------------------------------------------------------------
+//                //--------------------------------------------------------------------------------------------------
+//                //                                         KOPIEC
+//
+//                //DODAWANIE
+//                begin = std::chrono::high_resolution_clock::now();
+//                kopiec->add(testNumber);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[2][0] += (long)elapsed.count();
+//
+//                //USUWANIE KORZENIA
+//                begin = std::chrono::high_resolution_clock::now();
+//                kopiec->removeRoot();
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[2][1] += (long)elapsed.count();
+//
+//                //WYSZUKIWANIE
+//                begin = std::chrono::high_resolution_clock::now();
+//                kopiec->search(testNumber);
+//                end = std::chrono::high_resolution_clock::now();
+//                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+//                resultsMatrix[2][2] += (long)elapsed.count();
+//
+//                generateInputData(DATA_SET_SIZES[i], maxRand);
+                generateInputData(DATA_SET_SIZES[i], maxRand);
                 tablica->fillFromFile(FILE_NAME);
                 lista->fillFromFile(FILE_NAME);
                 kopiec->fillFromFile(FILE_NAME);
@@ -159,55 +304,48 @@ public:
                 //--------------------------------------------------------------------------------------------------
                 //--------------------------------------------------------------------------------------------------
                 //--------------------------------------------------------------------------------------------------
-                                                        //TABLICA
+                //                                      TABLICA
                 //DODAWANIE NA POCZĄTKU
-                auto begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 tablica->addBeginning(testNumber);
-                auto end = std::chrono::high_resolution_clock::now();
-                auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[0][0] += (long)elapsed.count();
+                double measurement = GetCounter();
+                resultsMatrix[0][0] += measurement;
 
                 //USUWANIE NA POCZĄTKU
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 tablica->removeBeginning();
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[0][1] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[0][1] += measurement;
 
                 //DODAWANIE NA KOŃCU
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 tablica->addEnd(testNumber);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[0][2] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[0][2] += measurement;
 
                 //USUWANIE NA KOŃCU
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 tablica->removeEnd();
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[0][3] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[0][3] += measurement;
 
                 //DODAWANIE NA DOWOLNYM MIEJSCU (środek struktury)
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 tablica->addIndex(testIndex, testNumber);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[0][4] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[0][4] += measurement;
 
                 //USUWANIE NA DOWOLNYM MIEJSCU (środek struktury)
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 tablica->removeIndex(testIndex);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[0][5] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[0][5] += measurement;
 
                 //WYSZUKIWANIE
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 tablica->search(testNumber);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[0][6] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[0][6] += measurement;
 
 
                 //--------------------------------------------------------------------------------------------------
@@ -215,53 +353,46 @@ public:
                 //--------------------------------------------------------------------------------------------------
                 //                                         LISTA
                 //DODAWANIE NA POCZĄTKU
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 lista->addBeginning(testNumber);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[1][0] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[1][0] += measurement;
 
                 //USUWANIE NA POCZĄTKU
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 lista->removeBeginning();
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[1][1] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[1][1] += measurement;
 
                 //DODAWANIE NA KOŃCU
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 lista->addEnd(testNumber);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[1][2] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[1][2] += measurement;
 
                 //USUWANIE NA KOŃCU
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 lista->removeEnd();
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[1][3] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[1][3] += measurement;
 
                 //DODAWANIE NA DOWOLNYM MIEJSCU (środek struktury)
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 lista->addIndex(testIndex, testNumber);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[1][4] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[1][4] += measurement;
 
                 //USUWANIE NA DOWOLNYM MIEJSCU (środek struktury)
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 lista->removeIndex(testIndex);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[1][5] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[1][5] += measurement;
 
                 //WYSZUKIWANIE
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 lista->search(testNumber);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[1][6] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[1][6] += measurement;
 
 
                 //--------------------------------------------------------------------------------------------------
@@ -270,27 +401,22 @@ public:
                 //                                         KOPIEC
 
                 //DODAWANIE
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 kopiec->add(testNumber);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[2][0] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[2][0] += measurement;
 
                 //USUWANIE KORZENIA
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 kopiec->removeRoot();
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[2][1] += (long)elapsed.count();
+                measurement = GetCounter();
+                resultsMatrix[2][1] += measurement;
 
                 //WYSZUKIWANIE
-                begin = std::chrono::high_resolution_clock::now();
+                StartCounter();
                 kopiec->search(testNumber);
-                end = std::chrono::high_resolution_clock::now();
-                elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-                resultsMatrix[2][2] += (long)elapsed.count();
-
-                generateInputData(DATA_SET_SIZES[i], maxRand);
+                measurement = GetCounter();
+                resultsMatrix[2][2] += measurement;
             }
 
             for(int k = 0; k < 3; k++) {
@@ -328,7 +454,7 @@ public:
         srand(time(nullptr));
         cout<<"Rozpocznięcie testu"<<endl;
         getInputDataAndTest();
-        generateResultsFile();
+//        generateResultsFile();
         cout<<"Test zakończony."<<endl;
         delete [] DATA_SET_SIZES;
     }
