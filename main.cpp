@@ -52,7 +52,7 @@ int main() {
     int menuChoice, choice, value = 0, index = 0;
     bool changeStruct, quit = false;
 
-//    goto b;
+    goto b;
 
     cout<<"1. Test ręczny"<<endl;
     cout<<"2. Test automatyczny"<<endl;
@@ -284,129 +284,129 @@ int main() {
 
 
 
-//    b:
-//    lista = new Lista;
-//    TimeTest t;
-//
-//    //DODAWANIE POCZĄTEK
-//    t.generateInputData(10000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->addBeginning(500);
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(20000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->addBeginning(500);
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(30000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->addBeginning(500);
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(40000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->addBeginning(500);
-//    cout<<t.GetCounter()<<endl;
-//    cout<<endl;
-//
-//    //USUWANIE POCZĄTEK
-//    t.generateInputData(10000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->removeBeginning();
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(20000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->removeBeginning();
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(30000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->removeBeginning();
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(40000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->removeBeginning();
-//    cout<<t.GetCounter()<<endl;
-//    cout<<endl;
-//
-//    //DODAWANIE KONIEC
-//    t.generateInputData(10000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->addEnd(500);
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(20000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->addEnd(500);
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(30000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->addEnd(500);
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(40000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->addEnd(500);
-//    cout<<t.GetCounter()<<endl;
-//    cout<<endl;
-//
-//    //ODEJMOWANIE
-//    t.generateInputData(10000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->removeEnd();
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(20000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->removeEnd();
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(30000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->removeEnd();
-//    cout<<t.GetCounter()<<endl;
-//
-//    t.generateInputData(40000, 1000);
-//    lista->fillFromFile(FILE_NAME);
-//
-//    t.StartCounter();
-//    lista->removeEnd();
-//    cout<<t.GetCounter()<<endl;
-//    cout<<endl;
+    b:
+    lista = new Lista;
+    TimeTest t;
+
+    //DODAWANIE POCZĄTEK
+    t.generateInputData(10000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->addBeginning(500);
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(20000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->addBeginning(500);
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(30000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->addBeginning(500);
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(40000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->addBeginning(500);
+    cout<<t.GetCounter()<<endl;
+    cout<<endl;
+
+    //USUWANIE POCZĄTEK
+    t.generateInputData(10000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->removeBeginning();
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(20000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->removeBeginning();
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(30000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->removeBeginning();
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(40000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->removeBeginning();
+    cout<<t.GetCounter()<<endl;
+    cout<<endl;
+
+    //DODAWANIE KONIEC
+    t.generateInputData(10000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->addEnd(500);
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(20000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->addEnd(500);
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(30000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->addEnd(500);
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(40000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->addEnd(500);
+    cout<<t.GetCounter()<<endl;
+    cout<<endl;
+
+    //ODEJMOWANIE
+    t.generateInputData(10000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->removeEnd();
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(20000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->removeEnd();
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(30000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->removeEnd();
+    cout<<t.GetCounter()<<endl;
+
+    t.generateInputData(40000, 1000);
+    lista->fillFromFile(FILE_NAME);
+
+    t.StartCounter();
+    lista->removeEnd();
+    cout<<t.GetCounter()<<endl;
+    cout<<endl;
 
     return 0;
 }
