@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
+#include <ctime>
 #include "Lista.h"
+#include "TimeTest.cpp"
 
 using namespace std;
 
@@ -23,7 +25,8 @@ void Lista::fillFromFile(const char *name) {
         return;
     }
 
-    clear();
+    if(!isEmpty())
+        clear();
 
     int tempListSize;
     inFile >> tempListSize;
@@ -35,7 +38,7 @@ void Lista::fillFromFile(const char *name) {
     int value;
 
     while(inFile >> value) {
-        addEnd(value);
+        addBeginning(value);
     }
 
     if (inFile.eof()) {
@@ -249,4 +252,50 @@ void Lista::deleteNode(Node* le) {
 
 bool Lista::isEmpty() {
     return listSize == 0;
+}
+
+
+
+
+
+double PCF = 0.0;
+__int64 CounterS = 0;
+
+void StartC() {
+    LARGE_INTEGER li;
+    if(!QueryPerformanceFrequency(&li))
+        cout<<"QueryPerformanceFrequency failed!"<<endl;
+
+    PCF = double(li.QuadPart)/1000000000.0;
+
+    QueryPerformanceCounter(&li);
+    CounterS = li.QuadPart;
+}
+
+double GetC() {
+    LARGE_INTEGER li;
+    QueryPerformanceCounter(&li);
+    return double (li.QuadPart - CounterS)/PCF;
+}
+
+
+void Lista::zmierz(int size, int maxRand) {
+    double sredniCzas = 0;
+    int liczbaLosowa;
+
+    for(int i = 0; i<100;i++) {
+        for(int j = 0; j < size; j++) {
+            liczbaLosowa = (rand() % (2 * maxRand + 1)) - maxRand;
+            addBeginning(liczbaLosowa);
+        }
+
+        liczbaLosowa = (rand() % (2 * maxRand + 1)) - maxRand;
+
+        StartC();
+        addBeginning(liczbaLosowa);
+        sredniCzas += GetC();
+        clear();
+    }
+
+    cout<<"Time measure for "<<size<<" elements [TEST 2] : "<<sredniCzas/100<<endl;
 }

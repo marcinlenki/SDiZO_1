@@ -1,5 +1,4 @@
 #include <iostream>
-#include <chrono>
 #include "Tablica.h"
 #include "Lista.h"
 #include "Kopiec.h"
@@ -47,6 +46,25 @@ void menuDrzewa() {
     cout<<"7. Zmien strukture"<<endl;
     cout<<"Wybór: ";
 }
+
+double PCFreq = 0.0;
+__int64 CounterStart = 0;
+
+void StartCounter() {
+    LARGE_INTEGER li;
+    if(!QueryPerformanceFrequency(&li))
+        cout<<"QueryPerformanceFrequency failed!"<<endl;
+
+    PCFreq = double(li.QuadPart)/1000000000.0;
+
+    QueryPerformanceCounter(&li);
+    CounterStart = li.QuadPart;
+};
+double GetCounter() {
+    LARGE_INTEGER li;
+    QueryPerformanceCounter(&li);
+    return double (li.QuadPart - CounterStart)/PCFreq;
+};
 
 int main() {
     int menuChoice, choice, value = 0, index = 0;
@@ -285,128 +303,40 @@ int main() {
 
 
     b:
+    srand(time(NULL));
+
+    //TEST 1
+    cout<<"TEST 1"<<endl;
+    int maxRand = 10000;
+    double avgTime = 0;
     lista = new Lista;
     TimeTest t;
 
-    //DODAWANIE POCZĄTEK
-    t.generateInputData(10000, 1000);
-    lista->fillFromFile(FILE_NAME);
+    for(int i = 0; i < t.NUMBER_OF_REPETITIONS; i++) {
+        int testNumber = t.getRandomNumber(maxRand);
+        int testIndex = t.DATA_SET_SIZES[i] / 2;
 
-    t.StartCounter();
-    lista->addBeginning(500);
-    cout<<t.GetCounter()<<endl;
+        for(int j = 0; j < t.NUMBER_OF_REPETITIONS_PER_OPERATION; j++) {
+            t.generateInputData(t.DATA_SET_SIZES[i], maxRand);
 
-    t.generateInputData(20000, 1000);
-    lista->fillFromFile(FILE_NAME);
+            lista->fillFromFile(FILE_NAME);
 
-    t.StartCounter();
-    lista->addBeginning(500);
-    cout<<t.GetCounter()<<endl;
+            StartCounter();
+            lista->addBeginning(testNumber);
+            avgTime += GetCounter();
+        }
 
-    t.generateInputData(30000, 1000);
-    lista->fillFromFile(FILE_NAME);
+        cout<<"Time measure for "<<t.DATA_SET_SIZES[i]<<" elements: "<<avgTime/t.NUMBER_OF_REPETITIONS_PER_OPERATION<<endl;
+        avgTime = 0;
+    }
 
-    t.StartCounter();
-    lista->addBeginning(500);
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(40000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->addBeginning(500);
-    cout<<t.GetCounter()<<endl;
     cout<<endl;
 
-    //USUWANIE POCZĄTEK
-    t.generateInputData(10000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->removeBeginning();
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(20000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->removeBeginning();
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(30000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->removeBeginning();
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(40000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->removeBeginning();
-    cout<<t.GetCounter()<<endl;
-    cout<<endl;
-
-    //DODAWANIE KONIEC
-    t.generateInputData(10000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->addEnd(500);
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(20000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->addEnd(500);
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(30000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->addEnd(500);
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(40000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->addEnd(500);
-    cout<<t.GetCounter()<<endl;
-    cout<<endl;
-
-    //ODEJMOWANIE
-    t.generateInputData(10000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->removeEnd();
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(20000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->removeEnd();
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(30000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->removeEnd();
-    cout<<t.GetCounter()<<endl;
-
-    t.generateInputData(40000, 1000);
-    lista->fillFromFile(FILE_NAME);
-
-    t.StartCounter();
-    lista->removeEnd();
-    cout<<t.GetCounter()<<endl;
-    cout<<endl;
+    //TEST 2
+    cout<<"TEST 2"<<endl;
+    for(int i = 0; i < t.NUMBER_OF_REPETITIONS; i++) {
+        lista->zmierz(t.DATA_SET_SIZES[i], maxRand);
+    }
 
     return 0;
 }

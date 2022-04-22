@@ -29,6 +29,7 @@ public:
     bool addIndex(int index, int value);
     bool removeIndex(int index);
     void clear();
+    void zmierz(int,int);
 };
 
 #endif
