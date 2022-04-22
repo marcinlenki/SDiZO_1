@@ -280,6 +280,7 @@ double GetC() {
 
 
 void Lista::zmierz(int size, int maxRand) {
+    clear();
     double sredniCzas = 0;
     int liczbaLosowa;
 
