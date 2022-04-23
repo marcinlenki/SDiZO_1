@@ -20,9 +20,11 @@ public:
     bool rotateRight(Node *te);
     bool rotateLeft(Node *te);
     bool addFix(Node *te);
+    bool deleteFix(Node *te);
+    void RBTransplant(Node *u, Node *v);
     void showInOrder(Node *te);
     void clear(Node *te);
-    string output(Node *te);
+    Node * treeMin(Node *te);
 
 public:
     DrzewoCC();
@@ -34,7 +36,7 @@ public:
     bool add(int value);
     bool remove(int value);
     void clear();
-
+    string output(Node *te);
 };
 
 

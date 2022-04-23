@@ -136,7 +136,40 @@ bool DrzewoCC::add(int value) {
 }
 
 bool DrzewoCC::remove(int value) {
-    return false;
+    Node *remove = search(value);
+    if(remove == NIL)
+        return false;
+
+    Node *x;
+    Node *y = remove;
+    int yOriginalColor = y->color;
+    if(remove->left == NIL) {
+        x = remove->right;
+        RBTransplant(remove, x);
+    } else if(remove->right == NIL) {
+        x = remove->left;
+        RBTransplant(remove, x);
+    } else {
+        y = treeMin(remove->right);
+        yOriginalColor = y->color;
+        x = y->right;
+        if(y->parent == remove)
+            x->parent == y;
+        else {
+            RBTransplant(y, y->right);
+            y->right->parent = y;
+        }
+
+        RBTransplant(remove, y);
+        y->left = remove->left;
+        y->left->parent = y;
+        y->color = remove->color;
+    }
+
+    if(yOriginalColor == BLACK)
+        deleteFix(x);
+
+    return true;
 }
 
 void DrzewoCC::clear() {
@@ -209,6 +242,17 @@ bool DrzewoCC::rotateLeft(DrzewoCC::Node *te) {
     return true;
 }
 
+void DrzewoCC::RBTransplant(DrzewoCC::Node *u, DrzewoCC::Node *v) {
+    if(u->parent == NIL) {
+        root = v;
+    } else if(u == u->parent->left) {
+        u->parent->left = v;
+    } else
+        u->parent->right = v;
+
+    v->parent = u->parent;
+}
+
 bool DrzewoCC::addFix(DrzewoCC::Node *te) {
     Node *y;
 
@@ -253,6 +297,12 @@ bool DrzewoCC::addFix(DrzewoCC::Node *te) {
     return true;
 }
 
+
+bool DrzewoCC::deleteFix(DrzewoCC::Node *te) {
+    return false;
+}
+
+
 bool DrzewoCC::isEmpty() {
     return treeSize == 0;
 }
@@ -266,4 +316,13 @@ string DrzewoCC::output(DrzewoCC::Node *te) {
         color = "R";
 
     return to_string(te->value) + color;
+}
+
+
+DrzewoCC::Node *DrzewoCC::treeMin(DrzewoCC::Node *te) {
+    while(te->left != NIL) {
+        te = te->left;
+    }
+
+    return te;
 }
