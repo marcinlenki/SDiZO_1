@@ -3,7 +3,7 @@
 #include <windows.h>
 
 class Lista {
-public:
+private:
     struct Node {
         int value;
         Node *prev, *next;

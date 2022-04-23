@@ -3,6 +3,7 @@
 #include "Lista.h"
 #include "Kopiec.h"
 #include "TimeTest.cpp"
+#include "DrzewoCC.h"
 
 using namespace std;
 const char* ERROR_MESSAGE = "Nie udało się wykonać operacji.\n";
@@ -11,41 +12,54 @@ const char* FILE_NAME = "../dane.txt";
 Tablica *tablica;
 Lista *lista;
 Kopiec *kopiec;
+DrzewoCC *drzewo;
 
 void menuGlowne() {
     cout<<"Struktury do wyboru: "<<endl;
     cout<<"1. Tablica"<<endl;
     cout<<"2. Lista dwukierunkowa"<<endl;
     cout<<"3. Kopiec."<<endl;
-    cout<<"4. Wyjdź z programu"<<endl;
-    cout<<"Wybór: ";
+    cout<<"4. Drzewo czerwono czarne."<<endl;
+    cout<<"5. Wyjdz z programu"<<endl;
+    cout<<"Wybor: ";
 }
 void menuLT() {
-    cout<<"Naciśnij: "<<endl;
+    cout<<"Nacisnij: "<<endl;
     cout<<"1. Wczytaj z pliku."<<endl;
-    cout<<"2. Wyświetl."<<endl;
-    cout<<"3. Dodaj na początku."<<endl;
-    cout<<"4. Usuń na początku."<<endl;
-    cout<<"5. Dodaj na końcu."<<endl;
-    cout<<"6. Usuń na końcu."<<endl;
+    cout<<"2. Wyswietl."<<endl;
+    cout<<"3. Dodaj na poczatku."<<endl;
+    cout<<"4. Usun na poczatku."<<endl;
+    cout<<"5. Dodaj na koncu."<<endl;
+    cout<<"6. Usun na koncu."<<endl;
     cout<<"7. Dodaj w dowolnym miejscu."<<endl;
     cout<<"8. Usun w dowolnym miejscu."<<endl;
-    cout<<"9. Wyszkaj"<<endl;
-    cout<<"10. Wyczyść listę"<<endl;
+    cout<<"9. Wyszukaj"<<endl;
+    cout<<"10. Wyczysc listę"<<endl;
     cout<<"11. Zmien strukture"<<endl;
-    cout<<"Wybór: ";
+    cout<<"Wybor: ";
 }
-void menuDrzewa() {
+void menuKopiec() {
     cout<<"Naciśnij: "<<endl;
     cout<<"1. Wczytaj z pliku."<<endl;
-    cout<<"2. Wyświetl."<<endl;
+    cout<<"2. Wyswietl."<<endl;
     cout<<"3. Dodaj element."<<endl;
-    cout<<"4. Usuń korzeń."<<endl;
-    cout<<"5. Wyszkaj"<<endl;
-    cout<<"6. Wyczyść drzewo"<<endl;
+    cout<<"4. Usun korzeń."<<endl;
+    cout<<"5. Wyszukaj"<<endl;
+    cout<<"6. Wyczysc drzewo"<<endl;
     cout<<"7. Zmien strukture"<<endl;
-    cout<<"Wybór: ";
+    cout<<"Wybor: ";
 }
+void menuDrzewoCzCzar() {
+    cout<<"Naciśnij: "<<endl;
+    cout<<"1. Wczytaj z pliku."<<endl;
+    cout<<"2. Wyswietl."<<endl;
+    cout<<"3. Dodaj element."<<endl;
+    cout<<"4. Usun element."<<endl;
+    cout<<"5. Wyszukaj"<<endl;
+    cout<<"6. Wyczysc drzewo"<<endl;
+    cout<<"7. Zmien strukture"<<endl;
+    cout<<"Wybor: ";
+};
 
 double PCFreq = 0.0;
 __int64 CounterStart = 0;
@@ -72,9 +86,9 @@ int main() {
 
     goto b;
 
-    cout<<"1. Test ręczny"<<endl;
+    cout<<"1. Test reczny"<<endl;
     cout<<"2. Test automatyczny"<<endl;
-    cout<<"Wybór: ";
+    cout<<"Wybor: ";
     cin>>choice;
 
     if (choice == 1) {
@@ -240,7 +254,7 @@ int main() {
                     case 3:
                         kopiec = new Kopiec;
                         while (!changeStruct) {
-                            menuDrzewa();
+                            menuKopiec();
                             cin >> choice;
                             switch (choice) {
                                 case 1:
@@ -298,45 +312,54 @@ int main() {
             TimeTest timeTest;
             timeTest.run();
         } else
-            cout << "Błędny wybór!" << endl;
+            cout << "Bledny wybór!" << endl;
 
 
 
     b:
-    srand(time(NULL));
+    drzewo = new DrzewoCC;
 
-    //TEST 1
-    cout<<"TEST 1"<<endl;
-    int maxRand = 10000;
-    double avgTime = 0;
-    lista = new Lista;
-    TimeTest t;
+    drzewo->add(10);
 
-    for(int i = 0; i < t.NUMBER_OF_REPETITIONS; i++) {
-        int testNumber = t.getRandomNumber(maxRand);
-        int testIndex = t.DATA_SET_SIZES[i] / 2;
+    drzewo->fillFromFile(FILE_NAME);
 
-        for(int j = 0; j < t.NUMBER_OF_REPETITIONS_PER_OPERATION; j++) {
-            t.generateInputData(t.DATA_SET_SIZES[i], maxRand);
+    drzewo->showInOrder();
+    delete drzewo;
 
-            lista->fillFromFile(FILE_NAME);
-
-            StartCounter();
-            lista->addBeginning(testNumber);
-            avgTime += GetCounter();
-        }
-
-        cout<<"Time measure for "<<t.DATA_SET_SIZES[i]<<" elements: "<<avgTime/t.NUMBER_OF_REPETITIONS_PER_OPERATION<<endl;
-        avgTime = 0;
-    }
-
-    cout<<endl;
-
-    //TEST 2
-    cout<<"TEST 2"<<endl;
-    for(int i = 0; i < t.NUMBER_OF_REPETITIONS; i++) {
-        lista->zmierz(t.DATA_SET_SIZES[i], maxRand);
-    }
+//    srand(time(NULL));
+//
+//    //TEST 1
+//    cout<<"TEST 1"<<endl;
+//    int maxRand = 10000;
+//    double avgTime = 0;
+//    lista = new Lista;
+//    TimeTest t;
+//
+//    for(int i = 0; i < t.NUMBER_OF_REPETITIONS; i++) {
+//        int testNumber = t.getRandomNumber(maxRand);
+//        int testIndex = t.DATA_SET_SIZES[i] / 2;
+//
+//        for(int j = 0; j < t.NUMBER_OF_REPETITIONS_PER_OPERATION; j++) {
+//            t.generateInputData(t.DATA_SET_SIZES[i], maxRand);
+//
+//            lista->fillFromFile(FILE_NAME);
+//
+//            StartCounter();
+//            lista->addBeginning(testNumber);
+//            avgTime += GetCounter();
+//        }
+//
+//        cout<<"Time measure for "<<t.DATA_SET_SIZES[i]<<" elements: "<<avgTime/t.NUMBER_OF_REPETITIONS_PER_OPERATION<<endl;
+//        avgTime = 0;
+//    }
+//
+//    cout<<endl;
+//
+//    //TEST 2
+//    cout<<"TEST 2"<<endl;
+//    for(int i = 0; i < t.NUMBER_OF_REPETITIONS; i++) {
+//        lista->zmierz(t.DATA_SET_SIZES[i], maxRand);
+//    }
 
     return 0;
 }
