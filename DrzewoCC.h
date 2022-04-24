@@ -20,7 +20,7 @@ public:
     bool rotateRight(Node *te);
     bool rotateLeft(Node *te);
     bool addFix(Node *te);
-    bool deleteFix(Node *te);
+    bool removeFix(Node *te);
     void RBTransplant(Node *u, Node *v);
     void showInOrder(Node *te);
     void clear(Node *te);

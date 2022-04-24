@@ -167,7 +167,7 @@ bool DrzewoCC::remove(int value) {
     }
 
     if(yOriginalColor == BLACK)
-        deleteFix(x);
+        removeFix(x);
 
     return true;
 }
@@ -298,8 +298,61 @@ bool DrzewoCC::addFix(DrzewoCC::Node *te) {
 }
 
 
-bool DrzewoCC::deleteFix(DrzewoCC::Node *te) {
-    return false;
+bool DrzewoCC::removeFix(DrzewoCC::Node *te) {
+    Node *b;
+    while(te != NIL && te->color == BLACK) {
+        if(te == te->parent->left) {
+            b = te->parent->right;
+            if(b->color == RED) {
+                b->color = BLACK;
+                te->parent->color = RED;
+                rotateLeft(te->parent);
+                b = te->parent->right;
+            }
+            if(b->left->color == BLACK && b->right->color == BLACK) {
+                b->color = RED;
+                te = te->parent;
+            } else {
+                if(b->right->color == BLACK) {
+                    b->left->color == BLACK;
+                    b->color = RED;
+                    rotateRight(b);
+                    b = te->parent->right;
+                }
+                b->color = te->parent->color;
+                te->parent->color = BLACK;
+                b->right->color = BLACK;
+                rotateLeft(te->parent);
+                te = root;
+            }
+        } else {
+            b = te->parent->right;
+            if(b->color == RED) {
+                b->color = BLACK;
+                te->parent->color = RED;
+                rotateLeft(te->parent);
+                b = te->parent->right;
+            }
+            if(b->right->color == BLACK && b->left->color == BLACK) {
+                b->color = RED;
+                te = te->parent;
+            } else {
+                if(b->left->color == BLACK) {
+                    b->right->color == BLACK;
+                    b->color = RED;
+                    rotateRight(b);
+                    b = te->parent->right;
+                }
+                b->color = te->parent->color;
+                te->parent->color = BLACK;
+                b->left->color = BLACK;
+                rotateLeft(te->parent);
+                te = root;
+            }
+        }
+    }
+    te->color = BLACK;
+    return true;
 }
 
 

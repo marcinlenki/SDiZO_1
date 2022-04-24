@@ -324,6 +324,11 @@ int main() {
     drzewo->fillFromFile(FILE_NAME);
 
     drzewo->showInOrder();
+
+
+    drzewo->remove(1);
+    cout<<endl;
+    drzewo->showInOrder();
     delete drzewo;
 
 //    srand(time(NULL));
