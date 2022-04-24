@@ -338,7 +338,7 @@ bool DrzewoCC::removeFix(DrzewoCC::Node *te) {
                 te = te->parent;
             } else {
                 if(b->left->color == BLACK) {
-                    b->right->color == BLACK;
+                    b->right->color = BLACK;
                     b->color = RED;
                     rotateRight(b);
                     b = te->parent->right;
