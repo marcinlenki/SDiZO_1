@@ -1,6 +1,7 @@
 #ifndef PROJEKT_DRZEWOCC_H
 #define PROJEKT_DRZEWOCC_H
 using namespace std;
+#define COUNT 10
 const int RED = 0;
 const int BLACK = 1;
 
@@ -25,6 +26,7 @@ public:
     void showInOrder(Node *te);
     void clear(Node *te);
     Node * treeMin(Node *te);
+    void deleteNode(Node *te);
 
 public:
     DrzewoCC();
@@ -37,6 +39,7 @@ public:
     bool remove(int value);
     void clear();
     string output(Node *te);
+
 };
 
 

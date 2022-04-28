@@ -192,6 +192,7 @@ bool Lista::addIndex(int index, int value) {
             head = newNode;
 
         newNode->next = foundNode;
+        newNode->prev = foundNode->prev;
         foundNode->prev = newNode;
 
     } else {
@@ -212,12 +213,12 @@ bool Lista::removeIndex(int index) {
     Node *foundNode = get(index);
 
     if (foundNode->prev != nullptr) {
-        foundNode->prev->next = foundNode->next;
+        (foundNode->prev)->next = foundNode->next;
     } else
         head = foundNode->next;
 
     if (foundNode->next != nullptr) {
-        foundNode->next->prev = foundNode->prev;
+        (foundNode->next)->prev = foundNode->prev;
 
     } else {
         tail = foundNode->prev;

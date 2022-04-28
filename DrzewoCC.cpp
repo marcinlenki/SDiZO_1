@@ -62,12 +62,6 @@ void DrzewoCC::show() {
         return;
     }
 
-    Node *te = root;
-    bool left = true;
-
-    for(int i = 0; i<treeSize; i++) {
-        cout<<output(te)<<", lewe dziecko: "<<output(te->left)<<", prawe dziecko: "<<output(te->right)<<endl;
-    }
 
 }
 
@@ -154,9 +148,10 @@ bool DrzewoCC::remove(int value) {
         yOriginalColor = y->color;
         x = y->right;
         if(y->parent == remove)
-            x->parent == y;
+            x->parent = y;
         else {
             RBTransplant(y, y->right);
+            y->right = remove->right;
             y->right->parent = y;
         }
 
@@ -165,6 +160,9 @@ bool DrzewoCC::remove(int value) {
         y->left->parent = y;
         y->color = remove->color;
     }
+
+    treeSize--;
+    deleteNode(remove);
 
     if(yOriginalColor == BLACK)
         removeFix(x);
@@ -184,14 +182,21 @@ void DrzewoCC::clear(DrzewoCC::Node *te) {
 
 
     if (te != NIL) {
-        te->parent = nullptr;
-        te->left = nullptr;
-        te->right = nullptr;
-
         clear(tempLeft);
-        delete te;
+        deleteNode(te);
         clear(tempRight);
     }
+}
+
+string DrzewoCC::output(DrzewoCC::Node *te) {
+    string color, output;
+
+    if(te->color == BLACK)
+        color = "B";
+    else
+        color = "R";
+
+    return to_string(te->value) + color;
 }
 
 bool DrzewoCC::rotateRight(DrzewoCC::Node *te) {
@@ -284,11 +289,11 @@ bool DrzewoCC::addFix(DrzewoCC::Node *te) {
             } else {
                 if(te == te->parent->left) {
                     te = te->parent;
-                    rotateLeft(te);
+                    rotateRight(te);
                 }
                 te->parent->color = BLACK;
                 te->parent->parent->color = RED;
-                rotateRight(te->parent->parent);
+                rotateLeft(te->parent->parent);
             }
         }
     }
@@ -300,7 +305,7 @@ bool DrzewoCC::addFix(DrzewoCC::Node *te) {
 
 bool DrzewoCC::removeFix(DrzewoCC::Node *te) {
     Node *b;
-    while(te != NIL && te->color == BLACK) {
+    while(te != root && te->color == BLACK) {
         if(te == te->parent->left) {
             b = te->parent->right;
             if(b->color == RED) {
@@ -314,7 +319,7 @@ bool DrzewoCC::removeFix(DrzewoCC::Node *te) {
                 te = te->parent;
             } else {
                 if(b->right->color == BLACK) {
-                    b->left->color == BLACK;
+                    b->left->color = BLACK;
                     b->color = RED;
                     rotateRight(b);
                     b = te->parent->right;
@@ -326,12 +331,12 @@ bool DrzewoCC::removeFix(DrzewoCC::Node *te) {
                 te = root;
             }
         } else {
-            b = te->parent->right;
+            b = te->parent->left;
             if(b->color == RED) {
                 b->color = BLACK;
                 te->parent->color = RED;
-                rotateLeft(te->parent);
-                b = te->parent->right;
+                rotateRight(te->parent);
+                b = te->parent->left;
             }
             if(b->right->color == BLACK && b->left->color == BLACK) {
                 b->color = RED;
@@ -340,13 +345,13 @@ bool DrzewoCC::removeFix(DrzewoCC::Node *te) {
                 if(b->left->color == BLACK) {
                     b->right->color = BLACK;
                     b->color = RED;
-                    rotateRight(b);
-                    b = te->parent->right;
+                    rotateLeft(b);
+                    b = te->parent->left;
                 }
                 b->color = te->parent->color;
                 te->parent->color = BLACK;
                 b->left->color = BLACK;
-                rotateLeft(te->parent);
+                rotateRight(te->parent);
                 te = root;
             }
         }
@@ -360,17 +365,6 @@ bool DrzewoCC::isEmpty() {
     return treeSize == 0;
 }
 
-string DrzewoCC::output(DrzewoCC::Node *te) {
-    string color, output;
-
-    if(te->color == BLACK)
-        color = "B";
-    else
-        color = "R";
-
-    return to_string(te->value) + color;
-}
-
 
 DrzewoCC::Node *DrzewoCC::treeMin(DrzewoCC::Node *te) {
     while(te->left != NIL) {
@@ -378,4 +372,12 @@ DrzewoCC::Node *DrzewoCC::treeMin(DrzewoCC::Node *te) {
     }
 
     return te;
+}
+
+void DrzewoCC::deleteNode(DrzewoCC::Node *te) {
+    te->parent = nullptr;
+    te->right = nullptr;
+    te->left = nullptr;
+    te->value = 0;
+    delete te;
 }
