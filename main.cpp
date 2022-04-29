@@ -1,8 +1,8 @@
 #include <iostream>
+#include <fstream>
 #include "Tablica.h"
 #include "Lista.h"
 #include "Kopiec.h"
-#include "TimeTest.cpp"
 #include "DrzewoCC.h"
 
 using namespace std;
@@ -39,7 +39,7 @@ void menuLT() {
     cout<<"Wybor: ";
 }
 void menuKopiec() {
-    cout<<"Naciśnij: "<<endl;
+    cout<<"Nacisnij: "<<endl;
     cout<<"1. Wczytaj z pliku."<<endl;
     cout<<"2. Wyswietl."<<endl;
     cout<<"3. Dodaj element."<<endl;
@@ -50,7 +50,7 @@ void menuKopiec() {
     cout<<"Wybor: ";
 }
 void menuDrzewoCzCzar() {
-    cout<<"Naciśnij: "<<endl;
+    cout<<"Nacisnij: "<<endl;
     cout<<"1. Wczytaj z pliku."<<endl;
     cout<<"2. Wyswietl."<<endl;
     cout<<"3. Dodaj element."<<endl;
@@ -84,14 +84,6 @@ int main() {
     int menuChoice, choice, value = 0, index = 0;
     bool changeStruct, quit = false;
 
-//    goto b;
-
-    cout<<"1. Test reczny"<<endl;
-    cout<<"2. Test automatyczny"<<endl;
-    cout<<"Wybor: ";
-    cin>>choice;
-
-    if (choice == 1) {
             while (!quit) {
                 changeStruct = false;
                 menuGlowne();
@@ -138,7 +130,7 @@ int main() {
                                 case 7:
                                     cout << "Podaj wartosc do wpisania do struktury: ";
                                     cin >> value;
-                                    cout << "Podaj indeks na ktorym chcesz wykonać operacje: ";
+                                    cout << "Podaj indeks na ktorym chcesz wykonac operacje: ";
                                     cin >> index;
                                     if (!tablica->addIndex(index, value)) {
                                         cout << ERROR_MESSAGE << endl;
@@ -146,7 +138,7 @@ int main() {
                                         cout << "Dodawanie zakonczone sukcesem" << endl;
                                     break;
                                 case 8:
-                                    cout << "Podaj indeks na ktorym chcesz wykonać operacje: ";
+                                    cout << "Podaj indeks na ktorym chcesz wykonac operacje: ";
                                     cin >> index;
                                     if (!tablica->removeIndex(index)) {
                                         cout << ERROR_MESSAGE << endl;
@@ -215,7 +207,7 @@ int main() {
                                 case 7:
                                     cout << "Podaj wartosc do wpisania do struktury: ";
                                     cin >> value;
-                                    cout << "Podaj indeks na ktorym chcesz wykonać operacje: ";
+                                    cout << "Podaj indeks na ktorym chcesz wykonac operacje: ";
                                     cin >> index;
                                     if (!lista->addIndex(index, value)) {
                                         cout << ERROR_MESSAGE << endl;
@@ -223,7 +215,7 @@ int main() {
                                         cout << "Dodawanie zakonczone sukcesem" << endl;
                                     break;
                                 case 8:
-                                    cout << "Podaj indeks na ktorym chcesz wykonać operacje: ";
+                                    cout << "Podaj indeks na ktorym chcesz wykonac operacje: ";
                                     cin >> index;
                                     if (!lista->removeIndex(index)) {
                                         cout << ERROR_MESSAGE << endl;
@@ -359,50 +351,9 @@ int main() {
                         cout << "Bledny wybor!" << endl;
                 }
             }
-        }
-    else if(choice == 2) {
-            TimeTest timeTest;
-            timeTest.run();
-        } else
-            cout << "Bledny wybór!" << endl;
 
 
 
-//    b:
-//    srand(time(NULL));
-//
-//    //TEST 1
-//    cout<<"TEST 1"<<endl;
-//    int maxRand = 10000;
-//    double avgTime = 0;
-//    lista = new Lista;
-//    TimeTest t;
-//
-//    for(int i = 0; i < t.NUMBER_OF_REPETITIONS; i++) {
-//        int testNumber = t.getRandomNumber(maxRand);
-//        int testIndex = t.DATA_SET_SIZES[i] / 2;
-//
-//        for(int j = 0; j < t.NUMBER_OF_REPETITIONS_PER_OPERATION; j++) {
-//            t.generateInputData(t.DATA_SET_SIZES[i], maxRand);
-//
-//            lista->fillFromFile(FILE_NAME);
-//
-//            StartCounter();
-//            lista->addBeginning(testNumber);
-//            avgTime += GetCounter();
-//        }
-//
-//        cout<<"Time measure for "<<t.DATA_SET_SIZES[i]<<" elements: "<<avgTime/t.NUMBER_OF_REPETITIONS_PER_OPERATION<<endl;
-//        avgTime = 0;
-//    }
-//
-//    cout<<endl;
-//
-//    //TEST 2
-//    cout<<"TEST 2"<<endl;
-//    for(int i = 0; i < t.NUMBER_OF_REPETITIONS; i++) {
-//        lista->zmierz(t.DATA_SET_SIZES[i], maxRand);
-//    }
 
     return 0;
 }

@@ -20,13 +20,14 @@ void Tablica::fillFromFile(const char* name) {
         return;
     }
 
+    // Wczytanie z pliku kasuje wcześniejszą wartość tablicy.
     if(!isEmpty()) {
         clear();
     }
 
     inFile >> arrSize;
     if (arrSize <= 0) {
-        cout<<"W pliku wykryto błędne dane [ROZMIAR STRUKTURY]."<<endl;
+        cout<<"W pliku wykryto bledne dane [ROZMIAR STRUKTURY]."<<endl;
         return;
     }
 
@@ -38,9 +39,9 @@ void Tablica::fillFromFile(const char* name) {
     }
 
     if (inFile.eof()) {
-//        cout<<"Wczytywanie danych zakończone."<<endl;
+        cout<<"Wczytywanie danych zakonczone."<<endl;
     } else if(inFile.fail()) {
-        cout<<"Wczytywanie danych przerwane, nie udało się wczytać pliku."<<endl;
+        cout<<"Wczytywanie danych przerwane, nie udało się wczytac pliku."<<endl;
     } else {
         cout<<"Wczytywanie danych przerwane."<<endl;
     }
@@ -94,6 +95,10 @@ bool Tablica::removeBeginning() {
         delete[] arr;
         arr = temp;
         arrSize--;
+
+        // Kiedy po operacji usunięcia elementu tablica będzie pusta,
+        // zostanie zaalokowana tablica dynamiczna o wielkości zero.
+        // Jest to sytuacja, którą chcemy uniknąć, więc zwalniamy tablicę.
         if (isEmpty()) {
             delete[] arr;
             arr = nullptr;
@@ -164,9 +169,18 @@ bool Tablica::isEmpty() {
     return arrSize == 0;
 }
 
+// Funkcja resize zapewnia możliwość alokowania dokładnie tyle miejsca w pamięci,
+// ile jest elementów w tablicy.
+// Argument add wskazuje czy funkcja ma dodać miejsce na nowo dodany element czy
+// zwolnić miejsce po usuniętym elemencie.
 bool Tablica::resize(bool add) {
     int *temp;
 
+    // Operacja odbywa się krokowo:
+    // * Alokowane jest nowe miejsce w pamięci.
+    // * Elementy starej tablicy są kopiowane do nowej (memcpy).
+    // * Zwalniane jest miejsce w pamięci zajmowane przez starą tablicę.
+    // * Przypisanie wskaźnika arr, aby wskazywał na nowo utworzoną tablicę.
     if (add) {
         temp = new int[arrSize + 1];
         memcpy(temp, arr, arrSize * sizeof(int));
@@ -184,18 +198,21 @@ bool Tablica::resize(bool add) {
     return true;
 }
 
+// Funkcja "przesuwa" wszystkie elementy w tablicy o jeden w prawo.
 void Tablica::alignToRight(int index) {
     for(int i = (int)arrSize - 1; i > index; i--) {
         arr[i] = arr[i-1];
     }
 }
 
+// Funkcja "przesuwa" wszystkie elementy w tablicy o jeden w lewo.
 void Tablica::alignToLeft(int index) {
     for (int i = index; i < arrSize; i++) {
         arr[i] = arr[i + 1];
     }
 }
 
+// Funkcja zwalnia miejsce w pamięci zajęte przez tablicę.
 void Tablica::clear() {
     delete [] arr;
     arr = nullptr;

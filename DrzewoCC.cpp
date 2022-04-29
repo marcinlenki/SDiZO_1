@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <ctime>
+#include <windows.h>
 #include "DrzewoCC.h"
 
 using namespace std;
@@ -25,7 +27,7 @@ void DrzewoCC::fillFromFile(const char *name) {
     inFile.open(name);
 
     if (!inFile.is_open()) {
-        cout<<"Otwarcie pliku nie powiodło się."<<endl;
+        cout<<"Otwarcie pliku nie powiodło sie."<<endl;
         return;
     }
 
@@ -35,7 +37,7 @@ void DrzewoCC::fillFromFile(const char *name) {
     int tempListSize;
     inFile >> tempListSize;
     if (tempListSize <= 0) {
-        cout<<"W pliku wykryto błędne dane [ROZMIAR STRUKTURY]."<<endl;
+        cout<<"W pliku wykryto bledne dane [ROZMIAR STRUKTURY]."<<endl;
         return;
     }
 
@@ -46,23 +48,14 @@ void DrzewoCC::fillFromFile(const char *name) {
     }
 
     if (inFile.eof()) {
-//        cout<<"Wczytywanie danych zakończone."<<endl;
+        cout<<"Wczytywanie danych zakonczone."<<endl;
     } else if(inFile.fail()) {
-        cout<<"Wczytywanie danych przerwane, nie udało się wczytać pliku."<<endl;
+        cout<<"Wczytywanie danych przerwane, nie udało się wczytac pliku."<<endl;
     } else {
         cout<<"Wczytywanie danych przerwane."<<endl;
     }
 
     inFile.close();
-}
-
-void DrzewoCC::show() {
-    if(isEmpty()) {
-        cout<<"Drzewo jest puste."<<endl;
-        return;
-    }
-
-
 }
 
 void DrzewoCC::showInOrder(DrzewoCC::Node *te) {
@@ -196,7 +189,10 @@ string DrzewoCC::output(DrzewoCC::Node *te) {
     else
         color = "R";
 
-    return to_string(te->value) + color;
+    if(te == NIL)
+        return "(*)";
+    else
+        return to_string(te->value) + color;
 }
 
 bool DrzewoCC::rotateRight(DrzewoCC::Node *te) {
@@ -246,7 +242,7 @@ bool DrzewoCC::rotateLeft(DrzewoCC::Node *te) {
 
     return true;
 }
-
+// Funkcja służy do wstawiania jednego poddrzewa w miejsce drugiego.
 void DrzewoCC::RBTransplant(DrzewoCC::Node *u, DrzewoCC::Node *v) {
     if(u->parent == NIL) {
         root = v;
@@ -258,6 +254,7 @@ void DrzewoCC::RBTransplant(DrzewoCC::Node *u, DrzewoCC::Node *v) {
     v->parent = u->parent;
 }
 
+// Funkcja służy do przekolorowania drzewa po dodaniu nowego elementu.
 bool DrzewoCC::addFix(DrzewoCC::Node *te) {
     Node *y;
 
@@ -302,7 +299,7 @@ bool DrzewoCC::addFix(DrzewoCC::Node *te) {
     return true;
 }
 
-
+// Funkcja służy do przekolorowania drzewa po usunięciu elementu.
 bool DrzewoCC::removeFix(DrzewoCC::Node *te) {
     Node *b;
     while(te != root && te->color == BLACK) {
@@ -365,7 +362,7 @@ bool DrzewoCC::isEmpty() {
     return treeSize == 0;
 }
 
-
+// Funkcja zwraca minimalną wartość z wybranego poddrzewa.
 DrzewoCC::Node *DrzewoCC::treeMin(DrzewoCC::Node *te) {
     while(te->left != NIL) {
         te = te->left;
@@ -380,4 +377,50 @@ void DrzewoCC::deleteNode(DrzewoCC::Node *te) {
     te->left = nullptr;
     te->value = 0;
     delete te;
+}
+
+
+// Przykładowa procedura mierzenia czasu
+
+double PCF = 0.0;
+__int64 CounterS = 0;
+
+void StartC() {
+    LARGE_INTEGER li;
+    if(!QueryPerformanceFrequency(&li))
+        cout<<"QueryPerformanceFrequency failed!"<<endl;
+
+    PCF = double(li.QuadPart)/1000000000.0;
+
+    QueryPerformanceCounter(&li);
+    CounterS = li.QuadPart;
+}
+
+double GetC() {
+    LARGE_INTEGER li;
+    QueryPerformanceCounter(&li);
+    return double (li.QuadPart - CounterS)/PCF;
+}
+
+
+void DrzewoCC::zmierz(int size, int maxRand) {
+    clear();
+    double sredniCzas = 0;
+    int liczbaLosowa, indeks = size/2;
+
+    for(int i = 0; i<100;i++) {
+        for(int j = 0; j < size; j++) {
+            liczbaLosowa = (rand() % (2 * maxRand + 1)) - maxRand;
+            add(liczbaLosowa);
+        }
+
+        liczbaLosowa = (rand() % (2 * maxRand + 1)) - maxRand;
+
+        StartC();
+        remove(liczbaLosowa);
+        sredniCzas += GetC();
+
+        clear();
+    }
+    cout<<"Time measure for "<<size<<" elements [TEST 2] : "<<sredniCzas/100<<endl;
 }

@@ -40,12 +40,13 @@ void Kopiec::fillFromFile(const char *name) {
         arr[index++] = value;
     }
 
+    // Budowanie kopca metodą Floyda
     buildMaxHeap();
 
     if (inFile.eof()) {
-//        cout<<"Wczytywanie danych zakończone."<<endl;
+        cout<<"Wczytywanie danych zakonczone."<<endl;
     } else if(inFile.fail()) {
-        cout<<"Wczytywanie danych przerwane, nie udało się wczytać pliku."<<endl;
+        cout<<"Wczytywanie danych przerwane, nie udało się wczytac pliku."<<endl;
     } else {
         cout<<"Wczytywanie danych przerwane."<<endl;
     }
@@ -124,6 +125,7 @@ bool Kopiec::isEmpty() {
     return heapSize == 0;
 }
 
+// Ta sama funkcja jak w przypadku Tablicy
 bool Kopiec::resize(bool add) {
     int *temp;
 
@@ -156,6 +158,9 @@ int Kopiec::rightChildIndex(int i) {
     return 2*i + 2;
 }
 
+// Funkcja rekurencyjna, która służy do przywrócenia własności kopca.
+// Jej zadaniem jest spowodowaniem, aby wartość i "spłynęła" w miejsce, gdzie
+// nie będzie zaburzać własności kopca.
 void Kopiec::heapify(int i) {
     int largest;
     int left = leftChildIndex(i);
@@ -169,13 +174,14 @@ void Kopiec::heapify(int i) {
     if(right <= heapSize - 1 && arr[right] > arr[largest])
         largest = right;
 
-    // ??
     if(largest != i) {
         swap(arr[i], arr[largest]);
         heapify(largest);
     }
 }
 
+// Funkcja podobna do funkcji heapify, natomiast podany element wędruje
+// w górę, aż natrafi na miejsce, gdzie nie będzie zaburzać własności kopca.
 void Kopiec::heapifyUp(int childIndex) {
     if (childIndex == 0)
         return;
@@ -188,6 +194,7 @@ void Kopiec::heapifyUp(int childIndex) {
     }
 }
 
+// Budowanie kopca z nieuporządkowanej tablicy (metoda Floyda).
 void Kopiec::buildMaxHeap() {
     int lastParentIndex = ((int)heapSize/2) - 1;
     for(int i = lastParentIndex; i >= 0; i--) {

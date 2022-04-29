@@ -25,6 +25,7 @@ public:
     bool add(int value);
     bool removeRoot();
     void clear();
+
 };
 
 

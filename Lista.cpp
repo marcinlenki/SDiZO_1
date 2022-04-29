@@ -1,8 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include <ctime>
 #include "Lista.h"
-#include "TimeTest.cpp"
+
 
 using namespace std;
 
@@ -42,9 +41,9 @@ void Lista::fillFromFile(const char *name) {
     }
 
     if (inFile.eof()) {
-//        cout<<"Wczytywanie danych zakończone."<<endl;
+        cout<<"Wczytywanie danych zakonczone."<<endl;
     } else if(inFile.fail()) {
-        cout<<"Wczytywanie danych przerwane, nie udało się wczytać pliku."<<endl;
+        cout<<"Wczytywanie danych przerwane, nie udało się wczytac pliku."<<endl;
     } else {
         cout<<"Wczytywanie danych przerwane."<<endl;
     }
@@ -158,6 +157,8 @@ bool Lista::removeEnd() {
     return false;
 }
 
+// Funkcja zwraca element położony na wybranym indeksie.
+// W przypadku niepowodzenia zwraca NULL.
 Lista::Node *Lista::get(int index) {
     Node *le = head;
 
@@ -168,6 +169,7 @@ Lista::Node *Lista::get(int index) {
     return le;
 }
 
+// Funkcja dodawania na wybranym indeksie jest podzielona na 3 przypadki.
 bool Lista::addIndex(int index, int value) {
     if (index < 0 || index >= listSize + 1)
         return false;
@@ -177,6 +179,8 @@ bool Lista::addIndex(int index, int value) {
 
     newNode->value = value;
 
+    // 1
+    // Wpisanie elementu na indeksie równym rozmiarowi listy.
     if (foundNode == nullptr && !isEmpty()) {
         newNode->prev = tail;
         newNode->next = nullptr;
@@ -185,7 +189,10 @@ bool Lista::addIndex(int index, int value) {
 
         tail = newNode;
 
-    } else if (!isEmpty()) {
+    }
+    // 2
+    // Wpisanie elementu na dowolnym istniejącym indeksie.
+    else if (!isEmpty()) {
         if (foundNode->prev != nullptr) {
             foundNode->prev->next = newNode;
         } else
@@ -195,7 +202,10 @@ bool Lista::addIndex(int index, int value) {
         newNode->prev = foundNode->prev;
         foundNode->prev = newNode;
 
-    } else {
+    }
+    // 3
+    // Wpisanie elementu do pustej tablicy.
+    else {
         newNode->prev = nullptr;
         newNode->next = nullptr;
         head = newNode;
@@ -253,51 +263,4 @@ void Lista::deleteNode(Node* le) {
 
 bool Lista::isEmpty() {
     return listSize == 0;
-}
-
-
-
-
-
-double PCF = 0.0;
-__int64 CounterS = 0;
-
-void StartC() {
-    LARGE_INTEGER li;
-    if(!QueryPerformanceFrequency(&li))
-        cout<<"QueryPerformanceFrequency failed!"<<endl;
-
-    PCF = double(li.QuadPart)/1000000000.0;
-
-    QueryPerformanceCounter(&li);
-    CounterS = li.QuadPart;
-}
-
-double GetC() {
-    LARGE_INTEGER li;
-    QueryPerformanceCounter(&li);
-    return double (li.QuadPart - CounterS)/PCF;
-}
-
-
-void Lista::zmierz(int size, int maxRand) {
-    clear();
-    double sredniCzas = 0;
-    int liczbaLosowa;
-
-    for(int i = 0; i<100;i++) {
-        for(int j = 0; j < size; j++) {
-            liczbaLosowa = (rand() % (2 * maxRand + 1)) - maxRand;
-            addBeginning(liczbaLosowa);
-        }
-
-        liczbaLosowa = (rand() % (2 * maxRand + 1)) - maxRand;
-
-        StartC();
-        addBeginning(liczbaLosowa);
-        sredniCzas += GetC();
-        clear();
-    }
-
-    cout<<"Time measure for "<<size<<" elements [TEST 2] : "<<sredniCzas/100<<endl;
 }

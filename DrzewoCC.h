@@ -1,7 +1,6 @@
 #ifndef PROJEKT_DRZEWOCC_H
 #define PROJEKT_DRZEWOCC_H
 using namespace std;
-#define COUNT 10
 const int RED = 0;
 const int BLACK = 1;
 
@@ -32,7 +31,6 @@ public:
     DrzewoCC();
     ~DrzewoCC();
     void fillFromFile(const char* name);
-    void show();
     void showInOrder();
     Node* search(int value);
     bool add(int value);
@@ -40,8 +38,8 @@ public:
     void clear();
     string output(Node *te);
 
+
+    void zmierz(int size, int maxRand);
 };
-
-
 
 #endif

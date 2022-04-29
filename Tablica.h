@@ -2,7 +2,6 @@
 #define PROJEKT_TABLICA_H
 
 #include "fstream"
-using namespace std;
 
 class Tablica {
 private:
@@ -10,6 +9,8 @@ private:
     int *arr;
 
     bool isEmpty();
+
+    // Funkcje pomocnicze używane do dynamicznego alokowania tablicy
     bool resize(bool add);
     void alignToRight(int index);
     void alignToLeft(int index);
